@@ -15,11 +15,14 @@ package org.chromium.customtabsdemos;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
+
+import java.util.List;
 
 /**
  * The simplest way to use Chrome Custom Tabs. Without any customization or speeding process.
@@ -35,6 +38,11 @@ public class SimpleCustomTabActivity extends AppCompatActivity implements View.O
         findViewById(R.id.start_custom_tab).setOnClickListener(this);
 
         mUrlEditText = findViewById(R.id.url);
+
+        findViewById(R.id.getPackageNamesToUse).setOnClickListener(view -> {
+            List<String> names = CustomTabsHelper.getPackageNamesToUse(this);
+            Log.d("leiiiooo", String.valueOf(names));
+        });
     }
 
     @Override

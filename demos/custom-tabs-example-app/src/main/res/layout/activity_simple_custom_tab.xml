@@ -18,6 +18,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -45,4 +46,10 @@
         android:layout_marginTop="16dp"
         android:text="@string/label_start_custom_tab" />
 
+    <Button
+        android:id="@+id/getPackageNamesToUse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="getPackageNamesToUse"
+        android:textAllCaps="false" />
 </LinearLayout>

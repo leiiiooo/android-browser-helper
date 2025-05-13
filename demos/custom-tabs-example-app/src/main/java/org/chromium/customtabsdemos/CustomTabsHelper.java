@@ -132,4 +132,36 @@ public class CustomTabsHelper {
     public static String[] getPackages() {
         return new String[]{"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, LOCAL_PACKAGE};
     }
+
+    // ** leiiiooo test code ** //
+    public static List<String> getPackageNamesToUse(Context context) {
+        PackageManager pm = context.getPackageManager();
+        // Get default VIEW intent handler.
+        Intent activityIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"));
+        ResolveInfo defaultViewHandlerInfo = pm.resolveActivity(activityIntent, 0);
+        String defaultViewHandlerPackageName = null;
+        if (defaultViewHandlerInfo != null) {
+            defaultViewHandlerPackageName = defaultViewHandlerInfo.activityInfo.packageName;
+        }
+
+        // Get all apps that can handle VIEW intents.
+        List<ResolveInfo> resolvedActivityList = pm.queryIntentActivities(activityIntent, 0);
+        List<String> packagesSupportingCustomTabs = new ArrayList<>();
+        for (ResolveInfo info : resolvedActivityList) {
+            Intent serviceIntent = new Intent();
+            serviceIntent.setAction(ACTION_CUSTOM_TABS_CONNECTION);
+            serviceIntent.setPackage(info.activityInfo.packageName);
+            if (pm.resolveService(serviceIntent, 0) != null) {
+                packagesSupportingCustomTabs.add(info.activityInfo.packageName);
+            }
+        }
+
+        // Now packagesSupportingCustomTabs contains all apps that can handle both VIEW intents
+        // and service calls. Prefer the default browser if it supports Custom Tabs.
+        if (packagesSupportingCustomTabs.isEmpty()) {
+            return null;
+        } else {
+            return packagesSupportingCustomTabs;
+        }
+    }
 }
